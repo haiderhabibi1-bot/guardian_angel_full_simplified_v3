@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<section class="section narrow">
+    <h1>{% if lang == 'fr' %}Connexion{% else %}Log In{% endif %}</h1>
+    <form method="post" class="form-card">
+        {% csrf_token %}
+        <label>Username</label>
+        <input type="text" name="username" required>
+        <label>Password</label>
+        <input type="password" name="password" required>
+        <button type="submit" class="btn-primary">{% if lang == 'fr' %}Connexion{% else %}Log In{% endif %}</button>
+    </form>
+    <p class="muted"><a href="{% url 'password_reset' %}">{% if lang == 'fr' %}Mot de passe oublié ?{% else %}Forgot password?{% endif %}</a></p>
+    <p class="muted">{% if lang == 'fr' %}Pas encore de compte ?{% else %}No account yet?{% endif %} <a href="{% url 'register' %}">{% if lang == 'fr' %}Inscription client{% else %}Register (Customer){% endif %}</a> / <a href="{% url 'register_lawyer' %}">{% if lang == 'fr' %}Inscription avocat{% else %}Register (Lawyer){% endif %}</a></p>
+</section>
+{% endblock %}

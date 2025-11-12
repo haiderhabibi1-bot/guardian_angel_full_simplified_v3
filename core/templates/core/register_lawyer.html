@@ -1,0 +1,25 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<section class="section narrow">
+    <h1>{% if lang == 'fr' %}Créer un compte avocat{% else %}Create a Lawyer Account{% endif %}</h1>
+    <p class="muted">{% if lang == 'fr' %}Votre compte nécessite une approbation avant d'être visible.{% else %}Your account requires approval before becoming visible.{% endif %}</p>
+    <form method="post" enctype="multipart/form-data" class="form-card">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <label>{% if lang == 'fr' %}Mot de passe{% else %}Password{% endif %}</label>
+        <input type="password" name="password" required>
+        <label>{% if lang == 'fr' %}Confirmer le mot de passe{% else %}Confirm password{% endif %}</label>
+        <input type="password" name="password_confirm" required>
+        <label>{% if lang == 'fr' %}Spécialité{% else %}Specialty{% endif %}</label>
+        <input type="text" name="specialty" required>
+        <label>{% if lang == 'fr' %}Années d'expérience{% else %}Years of experience{% endif %}</label>
+        <input type="number" name="years_experience" min="0" required>
+        <label>{% if lang == 'fr' %}Numéro de barreau{% else %}Bar number{% endif %}</label>
+        <input type="text" name="bar_number" required>
+        <label>{% if lang == 'fr' %}Certificat du barreau (PDF/JPG){% else %}Bar certificate (PDF/JPG){% endif %}</label>
+        <input type="file" name="bar_certificate" required>
+        <button type="submit" class="btn-primary">{% if lang == 'fr' %}S'inscrire{% else %}Register{% endif %}</button>
+    </form>
+</section>
+{% endblock %}

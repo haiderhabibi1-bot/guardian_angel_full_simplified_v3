@@ -1,0 +1,34 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<section class="section">
+    <div class="section-header">
+        <h1>{% if lang == 'fr' %}Questions publiques{% else %}Public Questions{% endif %}</h1>
+        {% if user.is_authenticated and user.customerprofile %}
+            <a href="{% url 'ask_public_question' %}" class="btn-primary">{% if lang == 'fr' %}Poser une question{% else %}Ask a Question{% endif %}</a>
+        {% endif %}
+    </div>
+    {% if questions %}
+        <ul class="list-cards">
+            {% for q in questions %}
+                <li>
+                    <h3>{{ q.title }}</h3>
+                    {% if q.is_answered %}
+                        <p>{{ q.answer_text|linebreaksbr }}</p>
+                        <small>{% if lang == 'fr' %}Répondu par{% else %}Answered by{% endif %} {{ q.answered_by.user.username }}</small>
+                    {% else %}
+                        {% if user.is_authenticated and user.lawyerprofile %}
+                            <p>{{ q.body|linebreaksbr }}</p>
+                            <a class="link-inline" href="{% url 'answer_question' q.pk %}">{% if lang == 'fr' %}Répondre{% else %}Answer{% endif %}</a>
+                        {% else %}
+                            <p class="muted">{% if lang == 'fr' %}En attente de réponse{% else %}Awaiting answer{% endif %}</p>
+                        {% endif %}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>{% if lang == 'fr' %}Aucune question.{% else %}No questions.{% endif %}</p>
+    {% endif %}
+</section>
+{% endblock %}

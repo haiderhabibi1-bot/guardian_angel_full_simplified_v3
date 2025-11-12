@@ -1,0 +1,48 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+    <h1>{% if lang == 'fr' %}Votre ange gardien pour les questions juridiques{% else %}Your Guardian Angel for Legal Questions{% endif %}</h1>
+    <p>{% if lang == 'fr' %}Posez des questions publiques, parcourez les réponses et trouvez un avocat.{% else %}Ask public questions, browse answers, and find a lawyer.{% endif %}</p>
+    <div class="hero-actions">
+        <a href="{% url 'ask_public_question' %}" class="btn-primary">{% if lang == 'fr' %}Poser une question publique{% else %}Ask a Public Question{% endif %}</a>
+        <a href="{% url 'lawyers_list' %}" class="btn-secondary">{% if lang == 'fr' %}Voir les avocats{% else %}View Lawyers{% endif %}</a>
+    </div>
+</section>
+
+<section class="section two-column">
+    <div>
+        <h2>{% if lang == 'fr' %}Questions publiques récentes{% else %}Recent Public Questions{% endif %}</h2>
+        {% if latest_questions %}
+            <ul class="list-cards">
+                {% for q in latest_questions %}
+                    <li>
+                        <h3>{{ q.title }}</h3>
+                        <p>{{ q.answer_text|default:q.body|truncatechars:120 }}</p>
+                        {% if q.answered_by %}<small>{% if lang == 'fr' %}Répondu par{% else %}Answered by{% endif %} {{ q.answered_by.user.username }}</small>{% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'public_questions' %}" class="link-inline">{% if lang == 'fr' %}Voir toutes les questions →{% else %}View all public questions →{% endif %}</a>
+        {% else %}
+            <p>{% if lang == 'fr' %}Aucune question pour le moment.{% else %}No questions yet.{% endif %}</p>
+        {% endif %}
+    </div>
+    <div>
+        <h2>{% if lang == 'fr' %}Avocats vérifiés{% else %}Verified Lawyers{% endif %}</h2>
+        {% if lawyers %}
+            <ul class="list-cards grid-3">
+                {% for lawyer in lawyers %}
+                    <li>
+                        <h3>{{ lawyer.user.username }}</h3>
+                        <p>{{ lawyer.specialty }}</p>
+                        <small>{{ lawyer.years_experience }} {% if lang == 'fr' %}ans{% else %}years{% endif %}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>{% if lang == 'fr' %}Aucun avocat pour le moment.{% else %}No lawyers yet.{% endif %}</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

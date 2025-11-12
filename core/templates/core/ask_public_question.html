@@ -1,0 +1,12 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<section class="section narrow">
+    <h1>{% if lang == 'fr' %}Poser une question publique{% else %}Ask a Public Question{% endif %}</h1>
+    <form method="post" class="form-card">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-primary">{% if lang == 'fr' %}Soumettre{% else %}Submit{% endif %}</button>
+    </form>
+</section>
+{% endblock %}

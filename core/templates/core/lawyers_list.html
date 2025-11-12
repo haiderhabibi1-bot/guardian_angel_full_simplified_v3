@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<section class="section">
+    <h1>{% if lang == 'fr' %}Nos avocats{% else %}Our Lawyers{% endif %}</h1>
+    <p>{% if lang == 'fr' %}Profils des professionnels disponibles sur Guardian Angel.{% else %}Profiles of legal professionals available on Guardian Angel.{% endif %}</p>
+    <ul class="list-cards grid-3">
+        {% for lawyer in lawyers %}
+            <li>
+                <h3>{{ lawyer.user.username }}</h3>
+                <p>{{ lawyer.specialty }}</p>
+                <small>{{ lawyer.years_experience }} {% if lang == 'fr' %}ans{% else %}years{% endif %}</small>
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

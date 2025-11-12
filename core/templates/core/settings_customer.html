@@ -1,0 +1,14 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<section class="section narrow">
+    <h1>{% if lang == 'fr' %}Paramètres du client{% else %}Customer Settings{% endif %}</h1>
+    <form method="post" class="form-card">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <label>{% if lang == 'fr' %}Nouveau mot de passe (optionnel){% else %}New password (optional){% endif %}</label>
+        <input type="password" name="new_password">
+        <button type="submit" class="btn-primary">{% if lang == 'fr' %}Enregistrer{% else %}Save{% endif %}</button>
+    </form>
+</section>
+{% endblock %}

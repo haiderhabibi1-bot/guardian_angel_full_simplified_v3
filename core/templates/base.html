@@ -1,0 +1,62 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardian Angel</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<body>
+    <div class="gradient-bg light"></div>
+    <div class="vapor-logo"></div>
+
+    <header class="top-nav">
+        <div class="logo-title">
+            <div class="logo-text">Guardian Angel</div>
+            <div class="site-subtitle">{% if lang == 'fr' %}Conseils juridiques en ligne, simplifiés.{% else %}Online Legal Guidance, Simplified.{% endif %}</div>
+        </div>
+        <nav class="nav-links">
+            <a href="{% url 'home' %}">{% if lang == 'fr' %}Accueil{% else %}Home{% endif %}</a>
+            <a href="{% url 'public_questions' %}">{% if lang == 'fr' %}Questions publiques{% else %}Public Questions{% endif %}</a>
+            <a href="{% url 'lawyers_list' %}">{% if lang == 'fr' %}Avocats{% else %}Lawyers{% endif %}</a>
+            <a href="{% url 'about' %}">{% if lang == 'fr' %}À propos{% else %}About Us{% endif %}</a>
+            {% if user.is_authenticated %}
+                <span class="welcome-text">{{ user.username }}</span>
+                {% if user.lawyerprofile %}
+                    <a href="{% url 'settings_lawyer' %}">{% if lang == 'fr' %}Paramètres{% else %}Settings{% endif %}</a>
+                {% endif %}
+                {% if user.customerprofile %}
+                    <a href="{% url 'settings_customer' %}">{% if lang == 'fr' %}Paramètres{% else %}Settings{% endif %}</a>
+                {% endif %}
+                <a href="{% url 'logout' %}">{% if lang == 'fr' %}Déconnexion{% else %}Logout{% endif %}</a>
+            {% else %}
+                <a href="{% url 'login' %}">{% if lang == 'fr' %}Connexion{% else %}Login{% endif %}</a>
+                <a href="{% url 'register' %}" class="btn-outline">{% if lang == 'fr' %}Inscription client{% else %}Register (Customer){% endif %}</a>
+                <a href="{% url 'register_lawyer' %}" class="btn-outline">{% if lang == 'fr' %}Inscription avocat{% else %}Register (Lawyer){% endif %}</a>
+            {% endif %}
+            {% if lang == 'fr' %}
+                <a href="{% url 'switch_language' %}?lang=en&next={{ request.path }}" class="btn-lang">EN</a>
+            {% else %}
+                <a href="{% url 'switch_language' %}?lang=fr&next={{ request.path }}" class="btn-lang">FR</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="main-wrapper">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>© 2025 Guardian Angel. {% if lang == 'fr' %}Pas un cabinet d'avocats. À titre informatif seulement.{% else %}Not a law firm. For informational purposes only.{% endif %}</p>
+    </footer>
+</body>
+</html>

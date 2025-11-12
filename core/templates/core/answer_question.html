@@ -1,0 +1,15 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<section class="section narrow">
+    <h1>{% if lang == 'fr' %}Répondre à la question{% else %}Answer Question{% endif %}</h1>
+    <h3>{{ q.title }}</h3>
+    <p class="muted">{{ q.body }}</p>
+    <form method="post" class="form-card">
+        {% csrf_token %}
+        <label>{% if lang == 'fr' %}Votre réponse{% else %}Your answer{% endif %}</label>
+        <textarea name="answer_text" rows="6" required></textarea>
+        <button type="submit" class="btn-primary">{% if lang == 'fr' %}Publier la réponse{% else %}Post Answer{% endif %}</button>
+    </form>
+</section>
+{% endblock %}

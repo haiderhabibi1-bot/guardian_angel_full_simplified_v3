@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<section class="section narrow">
+    <h1>{% if lang == 'fr' %}Créer un compte client{% else %}Create a Customer Account{% endif %}</h1>
+    <form method="post" class="form-card">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <label>{% if lang == 'fr' %}Mot de passe{% else %}Password{% endif %}</label>
+        <input type="password" name="password" required>
+        <label>{% if lang == 'fr' %}Confirmer le mot de passe{% else %}Confirm password{% endif %}</label>
+        <input type="password" name="password_confirm" required>
+        <button type="submit" class="btn-primary">{% if lang == 'fr' %}S'inscrire{% else %}Register{% endif %}</button>
+    </form>
+    <p class="muted">{% if lang == 'fr' %}Déjà un compte ?{% else %}Already have an account?{% endif %} <a href="{% url 'login' %}">{% if lang == 'fr' %}Connexion{% else %}Log in{% endif %}</a>.</p>
+</section>
+{% endblock %}

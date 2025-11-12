@@ -1,0 +1,16 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<section class="section">
+    <h1>{% if lang == 'fr' %}À propos de nous{% else %}About Us{% endif %}</h1>
+    <p>
+        {% if lang == 'fr' %}
+        Guardian Angel est une plateforme où les utilisateurs peuvent poser des questions juridiques publiques et consulter des profils d'avocats vérifiés.
+        Nous ne sommes pas un cabinet d'avocats; nos contenus sont fournis à titre informatif.
+        {% else %}
+        Guardian Angel is a platform where users can ask public legal questions and browse verified lawyer profiles.
+        We are not a law firm; content is provided for informational purposes.
+        {% endif %}
+    </p>
+</section>
+{% endblock %}
